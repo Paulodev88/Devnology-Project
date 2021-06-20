@@ -1,14 +1,12 @@
 import 'package:devnology/models/vehicle.dart';
 import 'package:devnology/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VehicleItem extends StatelessWidget {
-  final Vehicle vehicle;
-
-  const VehicleItem(this.vehicle);
-
   @override
   Widget build(BuildContext context) {
+    final Vehicle vehicle = Provider.of<Vehicle>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(

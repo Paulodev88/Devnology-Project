@@ -1,6 +1,6 @@
-// Cadastrar a compra de um veículo; modelo; marca; ano de fabricação;
-// placa; cor; chassi; data da compra e valor da compra.
-class Vehicle {
+import 'package:flutter/material.dart';
+
+class Vehicle with ChangeNotifier {
   final String id;
   final String modelo;
   final String marca;
