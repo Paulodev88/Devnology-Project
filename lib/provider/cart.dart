@@ -5,24 +5,36 @@ import 'package:flutter/material.dart';
 class CartItem {
   final String id;
   final String modelo;
+  final String ano;
   final double valor;
+  final String imageUrl;
 
   CartItem({
     required this.id,
     required this.modelo,
+    required this.ano,
     required this.valor,
+    required this.imageUrl,
   });
 }
 
 class Cart with ChangeNotifier {
   Map<String, CartItem> _items = {};
 
-  Map<String, CartItem> get item {
+  Map<String, CartItem> get items {
     return {..._items};
   }
 
-  int get itemCount {
+  int get itemsCount {
     return _items.length;
+  }
+
+  double get totalAmount {
+    double total = 0.0;
+    _items.forEach((key, value) {
+      total += value.valor;
+    });
+    return total;
   }
 
   void addItem(Vehicle vehicle) {
@@ -34,7 +46,9 @@ class Cart with ChangeNotifier {
           () => CartItem(
               id: Random().nextDouble().toString(),
               modelo: vehicle.modelo,
-              valor: vehicle.valorVenda));
+              valor: vehicle.valorVenda,
+              ano: vehicle.anoFabricacao.toString(),
+              imageUrl: vehicle.imageUrl));
     }
     notifyListeners();
   }

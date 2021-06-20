@@ -14,7 +14,7 @@ class VehicleOverviewScreen extends StatelessWidget {
         actions: [
           Consumer<Cart>(
             builder: (ctx, cart, child) => Badge(
-              value: cart.itemCount.toString(),
+              value: cart.itemsCount.toString(),
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(AppRoutes.CART);

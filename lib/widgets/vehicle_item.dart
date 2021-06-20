@@ -38,7 +38,7 @@ class VehicleItem extends StatelessWidget {
             onPressed: () {
               vehicle.selected();
               cart.addItem(vehicle);
-              print(cart.itemCount);
+              print(cart.itemsCount);
             },
             color: Theme.of(context).accentColor,
           ),
