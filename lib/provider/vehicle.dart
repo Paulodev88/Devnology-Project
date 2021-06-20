@@ -10,7 +10,9 @@ class Vehicle with ChangeNotifier {
   final String chassi;
   final DateTime dataCompra;
   final double valorCompra;
+  final double valorVenda;
   final String imageUrl;
+  bool _isSelected = false;
 
   Vehicle({
     required this.id,
@@ -22,6 +24,11 @@ class Vehicle with ChangeNotifier {
     required this.chassi,
     required this.dataCompra,
     required this.valorCompra,
+    required this.valorVenda,
     required this.imageUrl,
   });
+
+  void selected() {
+    _isSelected = !_isSelected;
+  }
 }

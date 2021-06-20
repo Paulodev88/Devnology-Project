@@ -1,3 +1,4 @@
+import 'package:devnology/provider/cart.dart';
 import 'package:devnology/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => new Vehicles(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => new Vehicles(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => new Cart(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           primarySwatch: Colors.green,

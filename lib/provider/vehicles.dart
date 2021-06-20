@@ -1,4 +1,4 @@
-import 'package:devnology/models/vehicle.dart';
+import 'package:devnology/provider/vehicle.dart';
 import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
 

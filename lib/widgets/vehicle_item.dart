@@ -1,4 +1,5 @@
-import 'package:devnology/models/vehicle.dart';
+import 'package:devnology/provider/cart.dart';
+import 'package:devnology/provider/vehicle.dart';
 import 'package:devnology/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,9 @@ import 'package:provider/provider.dart';
 class VehicleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Vehicle vehicle = Provider.of<Vehicle>(context);
+    final Vehicle vehicle = Provider.of<Vehicle>(context, listen: false);
+    final Cart cart = Provider.of<Cart>(context, listen: false);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -30,7 +33,10 @@ class VehicleItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(vehicle);
+              print(cart.itemCount);
+            },
             color: Theme.of(context).accentColor,
           ),
         ),
