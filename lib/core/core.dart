@@ -1,4 +1,5 @@
 import 'package:devnology/provider/cart.dart';
+import 'package:devnology/screens/cart_screen/cart_scree.dart';
 import 'package:devnology/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,10 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
-        routes: {AppRoutes.VEHICLE_DETAIL: (ctx) => VehicleDetailScreen()},
+        routes: {
+          AppRoutes.VEHICLE_DETAIL: (ctx) => VehicleDetailScreen(),
+          AppRoutes.CART: (ctx) => CartScreen(),
+        },
       ),
     );
   }

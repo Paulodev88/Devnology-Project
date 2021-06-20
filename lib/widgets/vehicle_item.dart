@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class VehicleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Vehicle vehicle = Provider.of<Vehicle>(context, listen: false);
+    final Vehicle vehicle = Provider.of<Vehicle>(context, listen: true);
     final Cart cart = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(
@@ -32,8 +32,11 @@ class VehicleItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
+            icon: Icon(vehicle.isSelected
+                ? Icons.shopping_cart
+                : Icons.shopping_cart_outlined),
             onPressed: () {
+              vehicle.selected();
               cart.addItem(vehicle);
               print(cart.itemCount);
             },

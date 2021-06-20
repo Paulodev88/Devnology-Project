@@ -12,7 +12,7 @@ class Vehicle with ChangeNotifier {
   final double valorCompra;
   final double valorVenda;
   final String imageUrl;
-  bool _isSelected = false;
+  bool isSelected = false;
 
   Vehicle({
     required this.id,
@@ -29,6 +29,7 @@ class Vehicle with ChangeNotifier {
   });
 
   void selected() {
-    _isSelected = !_isSelected;
+    isSelected = !isSelected;
+    notifyListeners();
   }
 }

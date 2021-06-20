@@ -27,7 +27,7 @@ class Cart with ChangeNotifier {
 
   void addItem(Vehicle vehicle) {
     if (_items.containsKey(vehicle.id)) {
-      return;
+      _items.remove(vehicle.id);
     } else {
       _items.putIfAbsent(
           vehicle.id,
