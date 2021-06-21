@@ -1,5 +1,5 @@
 import 'package:devnology/provider/cart.dart';
-import 'package:devnology/provider/orders.dart';
+import 'package:devnology/provider/sales.dart';
 import 'package:devnology/screens/cart_screen/cart_scree.dart';
 import 'package:devnology/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           create: (_) => new Cart(),
         ),
         ChangeNotifierProvider(
-          create: (_) => new Orders(),
+          create: (_) => new Sales(),
         ),
       ],
       child: MaterialApp(

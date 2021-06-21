@@ -1,5 +1,5 @@
 import 'package:devnology/provider/cart.dart';
-import 'package:devnology/provider/orders.dart';
+import 'package:devnology/provider/sales.dart';
 import 'package:devnology/widgets/cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +40,7 @@ class CartScreen extends StatelessWidget {
                       onSurface: Colors.grey,
                     ),
                     onPressed: () {
-                      Provider.of<Orders>(context, listen: false)
-                          .addOrder(cart);
+                      Provider.of<Sales>(context, listen: false).addSale(cart);
                       cart.clear();
                     },
                   )

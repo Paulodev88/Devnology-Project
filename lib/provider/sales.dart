@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:devnology/provider/cart.dart';
 import 'package:flutter/material.dart';
 
-class Order {
+class Sale {
   final String id;
   final double total;
   final List<CartItem> vehicles;
   final DateTime date;
 
-  Order({
+  Sale({
     required this.id,
     required this.total,
     required this.vehicles,
@@ -17,19 +17,19 @@ class Order {
   });
 }
 
-class Orders with ChangeNotifier {
-  List<Order> _orders = [];
+class Sales with ChangeNotifier {
+  List<Sale> _sales = [];
 
-  List<Order> get orders {
-    return [..._orders];
+  List<Sale> get sales {
+    return [..._sales];
   }
 
-  void addOrder(Cart cart) {
+  void addSale(Cart cart) {
     // final combine = (totalSum, i) => totalSum + i.valor;
     // final total = vehicles.fold(0.0, combine);
-    _orders.insert(
+    _sales.insert(
       0,
-      Order(
+      Sale(
         id: Random().nextDouble().toString(),
         total: cart.totalAmount,
         vehicles: cart.items.values.toList(),

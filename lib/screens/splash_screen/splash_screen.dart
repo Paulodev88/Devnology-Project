@@ -1,4 +1,4 @@
-import 'package:devnology/screens/home_screen/vehicle_overview_screen.dart';
+import 'package:devnology/screens/overview_screen/vehicle_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
