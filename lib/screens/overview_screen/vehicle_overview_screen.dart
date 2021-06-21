@@ -1,5 +1,6 @@
 import 'package:devnology/provider/cart.dart';
 import 'package:devnology/utils/app_routes.dart';
+import 'package:devnology/widgets/app_drawer.dart';
 import 'package:devnology/widgets/badge.dart';
 import 'package:devnology/widgets/vehicle_grid.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class VehicleOverviewScreen extends StatelessWidget {
         ],
       ),
       body: VehicleGrid(),
+      drawer: AppDrawer(),
     );
   }
 }

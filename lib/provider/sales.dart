@@ -18,16 +18,20 @@ class Sale {
 }
 
 class Sales with ChangeNotifier {
-  List<Sale> _sales = [];
+  List<Sale> _items = [];
 
-  List<Sale> get sales {
-    return [..._sales];
+  List<Sale> get items {
+    return [..._items];
+  }
+
+  int get itemsCount {
+    return _items.length;
   }
 
   void addSale(Cart cart) {
     // final combine = (totalSum, i) => totalSum + i.valor;
     // final total = vehicles.fold(0.0, combine);
-    _sales.insert(
+    _items.insert(
       0,
       Sale(
         id: Random().nextDouble().toString(),

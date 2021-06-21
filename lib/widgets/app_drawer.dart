@@ -9,13 +9,14 @@ class AppDrawer extends StatelessWidget {
         children: [
           AppBar(
             title: Text('Bem vindo Devnology!'),
+            automaticallyImplyLeading: false,
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.directions_car),
             title: Text('Loja'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.Home);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.APP_Home);
             },
           ),
           Divider(),
