@@ -8,7 +8,7 @@ class VehicleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Vehicle vehicle = Provider.of<Vehicle>(context, listen: true);
-    final Cart cart = Provider.of<Cart>(context, listen: false);
+    final Cart cart = Provider.of<Cart>(context, listen: true);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -32,7 +32,7 @@ class VehicleItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: Icon(vehicle.isSelected
+            icon: Icon(cart.items.containsKey(vehicle.id)
                 ? Icons.shopping_cart
                 : Icons.shopping_cart_outlined),
             onPressed: () {
