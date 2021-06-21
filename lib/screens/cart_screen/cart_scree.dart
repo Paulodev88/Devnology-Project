@@ -1,4 +1,5 @@
 import 'package:devnology/provider/cart.dart';
+import 'package:devnology/provider/orders.dart';
 import 'package:devnology/widgets/cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,9 @@ class CartScreen extends StatelessWidget {
                       onSurface: Colors.grey,
                     ),
                     onPressed: () {
-                      print('Pressed');
+                      Provider.of<Orders>(context, listen: false)
+                          .addOrder(cart);
+                      cart.clear();
                     },
                   )
                 ],
@@ -51,9 +54,9 @@ class CartScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: cart.itemsCount,
-                itemBuilder: (ctx, i) =>
-                    CartItemWidget(cartItem: cartItems[i])),
+              itemCount: cart.itemsCount,
+              itemBuilder: (ctx, i) => CartItemWidget(cartItem: cartItems[i]),
+            ),
           ),
         ],
       ),
