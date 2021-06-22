@@ -3,4 +3,5 @@ class AppRoutes {
   static const CART = '/cart';
   static const SALES = '/sales';
   static const APP_Home = '/overview';
+  static const VEHICLES = '/vehicles';
 }

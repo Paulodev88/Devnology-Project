@@ -22,9 +22,17 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.payment),
-            title: Text('Carros Vendidos'),
+            title: Text('Veículos Vendidos'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(AppRoutes.SALES);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.garage),
+            title: Text('Gerenciar Veículos'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(AppRoutes.VEHICLES);
             },
           ),
         ],

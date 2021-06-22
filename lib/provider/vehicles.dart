@@ -11,4 +11,8 @@ class Vehicles with ChangeNotifier {
     _items.add(vehicle);
     notifyListeners();
   }
+
+  int get vehiclesCount {
+    return _items.length;
+  }
 }
