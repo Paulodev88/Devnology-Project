@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CartItem {
   final String id;
-  final String productID;
+  final String vehicleID;
   final String modelo;
   final String ano;
   final double valor;
@@ -12,7 +12,7 @@ class CartItem {
 
   CartItem({
     required this.id,
-    required this.productID,
+    required this.vehicleID,
     required this.modelo,
     required this.ano,
     required this.valor,
@@ -47,7 +47,7 @@ class Cart with ChangeNotifier {
           vehicle.id,
           () => CartItem(
               id: Random().nextDouble().toString(),
-              productID: vehicle.id,
+              vehicleID: vehicle.id,
               modelo: vehicle.modelo,
               valor: vehicle.valorVenda,
               ano: vehicle.anoFabricacao.toString(),
@@ -56,8 +56,8 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String productId) {
-    _items.remove(productId);
+  void removeItem(String vehicleID) {
+    _items.remove(vehicleID);
     notifyListeners();
   }
 

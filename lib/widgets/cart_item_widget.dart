@@ -24,7 +24,7 @@ class CartItemWidget extends StatelessWidget {
       direction: DismissDirection.endToStart,
       onDismissed: (_) {
         Provider.of<Cart>(context, listen: false)
-            .removeItem(cartItem.productID);
+            .removeItem(cartItem.vehicleID);
       },
       child: Card(
         margin: EdgeInsets.symmetric(

@@ -36,9 +36,21 @@ class VehicleItem extends StatelessWidget {
                 ? Icons.shopping_cart
                 : Icons.shopping_cart_outlined),
             onPressed: () {
-              vehicle.selected();
+              final snackBar = SnackBar(
+                content: Text('Carro Adicionado!'),
+                action: SnackBarAction(
+                  label: 'Desfazer',
+                  onPressed: () {
+                    cart.removeItem(vehicle.id);
+                  },
+                ),
+              );
+
               cart.addItem(vehicle);
-              print(cart.itemsCount);
+              if (cart.items.containsKey(vehicle.id)) {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
             },
             color: Theme.of(context).accentColor,
           ),
