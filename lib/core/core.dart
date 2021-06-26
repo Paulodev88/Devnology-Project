@@ -4,6 +4,7 @@ import 'package:devnology/screens/cart_screen/cart_scree.dart';
 import 'package:devnology/screens/overview_screen/vehicle_overview_screen.dart';
 import 'package:devnology/screens/sale_screen/sale_screen.dart';
 import 'package:devnology/screens/splash_screen/splash_screen.dart';
+import 'package:devnology/screens/vehicle_screen/vehicle_form/vehicle_form.dart';
 import 'package:devnology/screens/vehicle_screen/vehicle_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.CART: (ctx) => CartScreen(),
           AppRoutes.SALES: (ctx) => SalesScreen(),
           AppRoutes.VEHICLES: (ctx) => VehiclesScreen(),
+          AppRoutes.VEHICLES_FORM: (ctx) => VehicleFormScreen(),
         },
       ),
     );

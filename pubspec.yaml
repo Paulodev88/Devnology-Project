@@ -16,7 +16,9 @@ dependencies:
   splash_screen_view: ^3.0.0
   http: ^0.13.3
   provider: ^5.0.0
-  intl: ^0.17.0
+  intl: ^0.17.0  
+  image_picker: ^0.8.1+1
+  image_cropper: ^1.4.1
 
 dev_dependencies:
   flutter_test:
