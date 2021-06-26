@@ -1,6 +1,8 @@
 import 'package:devnology/provider/vehicle.dart';
+import 'package:devnology/provider/vehicles.dart';
 import 'package:devnology/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VehicleItem extends StatelessWidget {
   final Vehicle vehicle;
@@ -31,7 +33,36 @@ class VehicleItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text('Tem certeza?'),
+                    content: Text('Quer remover o veículo?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text('Não'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Provider.of<Vehicles>(context, listen: false)
+                              .deleteVehicle(vehicle.id!);
+                          Navigator.of(context).pop(true);
+                        },
+                        child: Text(
+                          'Sim',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
               icon: Icon(Icons.delete),
               color: Theme.of(context).errorColor,
             ),

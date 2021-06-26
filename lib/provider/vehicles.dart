@@ -42,4 +42,12 @@ class Vehicles with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void deleteVehicle(String id) {
+    final index = _items.indexWhere((element) => element.id == element.id);
+    if (index >= 0) {
+      _items.removeWhere((element) => element.id == id);
+      notifyListeners();
+    }
+  }
 }
