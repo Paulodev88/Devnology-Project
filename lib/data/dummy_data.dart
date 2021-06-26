@@ -10,7 +10,7 @@ final DUMMY_VEHICLE = [
     placa: 'FLUTTE2020',
     cor: 'Preto',
     chassi: 'Algum123',
-    dataCompra: DateTime.parse('2020-09-07 10:06:27.090Z'),
+    dataCompra: '2020-09-07 10:06:27.090Z',
     valorCompra: 39900.00,
     valorVenda: 45000.00,
     imageUrl:
@@ -24,7 +24,7 @@ final DUMMY_VEHICLE = [
     placa: 'FLUTTE2000',
     cor: 'Prata',
     chassi: 'Vectra123',
-    dataCompra: DateTime.parse('2020-11-07 09:06:30.090Z'),
+    dataCompra: '2020-11-07 09:06:30.090Z',
     valorCompra: 19000.00,
     valorVenda: 24000.00,
     imageUrl:
@@ -38,7 +38,7 @@ final DUMMY_VEHICLE = [
     placa: 'FLUTTE2021',
     cor: 'Preto',
     chassi: 'Honda123',
-    dataCompra: DateTime.parse('2021-04-01 11:11:27.090Z'),
+    dataCompra: '2021-04-01 11:11:27.090Z',
     valorCompra: 119900.00,
     valorVenda: 134999.00,
     imageUrl:
@@ -52,7 +52,7 @@ final DUMMY_VEHICLE = [
     placa: 'FLUTTE2022',
     cor: 'Prata',
     chassi: 'Corolla123',
-    dataCompra: DateTime.parse('2021-06-19 20:15:19.090Z'),
+    dataCompra: '2021-06-19 20:15:19.090Z',
     valorCompra: 159900.00,
     valorVenda: 175000.00,
     imageUrl:

@@ -8,7 +8,7 @@ class Vehicle with ChangeNotifier {
   final String placa;
   final String cor;
   final String chassi;
-  final DateTime dataCompra;
+  final String dataCompra;
   final double valorCompra;
   final double valorVenda;
   final String imageUrl;

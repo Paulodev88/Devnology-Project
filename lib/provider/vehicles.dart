@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:devnology/provider/vehicle.dart';
 import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
+import 'package:http/http.dart' as http;
 
 class Vehicles with ChangeNotifier {
   List<Vehicle> _items = DUMMY_VEHICLE;
@@ -9,6 +11,22 @@ class Vehicles with ChangeNotifier {
   List<Vehicle> get items => [..._items];
 
   void addVehicle(Vehicle newVehicle) {
+    final url = Uri.parse(
+        'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles.json');
+    http.post(url,
+        body: json.encode({
+          'anoFabricacao': newVehicle.anoFabricacao,
+          'chassi': newVehicle.chassi,
+          'cor': newVehicle.cor,
+          'dataCompra': newVehicle.dataCompra,
+          'imageUrl': newVehicle.imageUrl,
+          'marca': newVehicle.marca,
+          'modelo': newVehicle.modelo,
+          'placa': newVehicle.placa,
+          'valorCompra': newVehicle.valorCompra,
+          'valorVenda': newVehicle.valorVenda
+        }));
+
     _items.add(
       Vehicle(
           id: Random().nextDouble().toString(),

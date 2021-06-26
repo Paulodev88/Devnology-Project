@@ -72,6 +72,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   void _saveForm() {
     bool isValid = _form.currentState!.validate();
     if (!isValid) {
+      print('Aqui');
       return;
     }
     _form.currentState!.save();
@@ -83,7 +84,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       placa: _formData['placa'],
       cor: _formData['cor'],
       chassi: _formData['chassi'],
-      dataCompra: DateTime.now(),
+      dataCompra: DateTime.now().toString(),
       valorCompra: _formData['valorCompra'],
       valorVenda: _formData['valorVenda'],
       imageUrl: _formData['imageUrl'],
