@@ -29,4 +29,17 @@ class Vehicles with ChangeNotifier {
   int get vehiclesCount {
     return _items.length;
   }
+
+  void updateVehicle(Vehicle vehicle) {
+    if (vehicle.id == null) {
+      return;
+    }
+
+    final index = _items.indexWhere((element) => element.id == element.id);
+
+    if (index >= 0) {
+      _items[index] = vehicle;
+      notifyListeners();
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:devnology/provider/vehicle.dart';
+import 'package:devnology/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class VehicleItem extends StatelessWidget {
@@ -19,7 +20,13 @@ class VehicleItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.VEHICLES_FORM,
+                  arguments: vehicle,
+                );
+              },
               icon: Icon(Icons.edit),
               color: Theme.of(context).primaryColor,
             ),

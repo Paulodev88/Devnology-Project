@@ -22,6 +22,33 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     _imageURLFocusNode.addListener(_updateImageUrl);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_formData.isEmpty) {
+      final vehicle = ModalRoute.of(context)!.settings.arguments as dynamic;
+
+      if (vehicle != null) {
+        _formData['id'] = vehicle.id;
+        _formData['modelo'] = vehicle.modelo;
+        _formData['marca'] = vehicle.marca;
+        _formData['anoFabricacao'] = vehicle.anoFabricacao;
+        _formData['placa'] = vehicle.placa;
+        _formData['cor'] = vehicle.cor;
+        _formData['chassi'] = vehicle.chassi;
+        _formData['valorCompra'] = vehicle.valorCompra;
+        _formData['valorVenda'] = vehicle.valorVenda;
+        _formData['imageUrl'] = vehicle.imageUrl;
+
+        _imageURLController.text = _formData['imageUrl'];
+      } else {
+        _formData['anoFabricacao'] = '';
+        _formData['valorCompra'] = '';
+        _formData['valorVenda'] = '';
+      }
+    }
+  }
+
   void _updateImageUrl() {
     if (isValidImageUrl(_imageURLController.text)) {
       setState(() {});
@@ -31,11 +58,8 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   bool isValidImageUrl(String url) {
     bool isValidProtocol = url.toLowerCase().startsWith('http://') ||
         url.toLowerCase().startsWith('https://');
-    bool isValidExtension = url.toLowerCase().endsWith('.png') ||
-        url.toLowerCase().endsWith('.jpg') ||
-        url.toLowerCase().endsWith('.jpeg');
 
-    return isValidProtocol && isValidExtension;
+    return isValidProtocol;
   }
 
   @override
@@ -51,7 +75,8 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       return;
     }
     _form.currentState!.save();
-    final newVehicle = Vehicle(
+    final vehicle = Vehicle(
+      id: _formData['id'],
       modelo: _formData['modelo'],
       marca: _formData['marca'],
       anoFabricacao: _formData['anoFabricacao'],
@@ -64,7 +89,12 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       imageUrl: _formData['imageUrl'],
     );
 
-    Provider.of<Vehicles>(context, listen: false).addVehicle(newVehicle);
+    final vehicles = Provider.of<Vehicles>(context, listen: false);
+    if (_formData['id'] == null) {
+      vehicles.addVehicle(vehicle);
+    } else {
+      vehicles.updateVehicle(vehicle);
+    }
     Navigator.of(context).pop();
   }
 
@@ -131,6 +161,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   ],
                 ),
                 TextFormField(
+                  initialValue: _formData['modelo'],
                   decoration: InputDecoration(labelText: 'Modelo:'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['modelo'] = value,
@@ -144,6 +175,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['marca'],
                   decoration: InputDecoration(labelText: 'Frabicante:'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['marca'] = value,
@@ -157,6 +189,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['anoFabricacao'].toString(),
                   decoration: InputDecoration(labelText: 'Ano:'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -172,6 +205,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['placa'],
                   decoration: InputDecoration(labelText: 'Placa'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['placa'] = value,
@@ -185,6 +219,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['cor'],
                   decoration: InputDecoration(labelText: 'Cor'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['cor'] = value,
@@ -198,6 +233,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['chassi'],
                   decoration: InputDecoration(labelText: 'Chassi'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['chassi'] = value,
@@ -211,6 +247,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['valorCompra'].toString(),
                   decoration: InputDecoration(labelText: 'Valor da Compra'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -227,6 +264,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   },
                 ),
                 TextFormField(
+                  initialValue: _formData['valorVenda'].toString(),
                   decoration: InputDecoration(labelText: 'Valor da Venda'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
