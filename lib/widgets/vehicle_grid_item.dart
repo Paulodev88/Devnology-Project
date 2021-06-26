@@ -41,7 +41,7 @@ class VehicleGridItem extends StatelessWidget {
                 action: SnackBarAction(
                   label: 'Desfazer',
                   onPressed: () {
-                    cart.removeItem(vehicle.id);
+                    cart.removeItem(vehicle.id!);
                   },
                 ),
               );

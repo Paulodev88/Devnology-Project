@@ -1,7 +1,7 @@
-import 'dart:math';
-
 import 'package:devnology/provider/vehicle.dart';
+import 'package:devnology/provider/vehicles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VehicleFormScreen extends StatefulWidget {
   const VehicleFormScreen({Key? key}) : super(key: key);
@@ -52,7 +52,6 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     }
     _form.currentState!.save();
     final newVehicle = Vehicle(
-      id: Random().nextDouble().toString(),
       modelo: _formData['modelo'],
       marca: _formData['marca'],
       anoFabricacao: _formData['anoFabricacao'],
@@ -64,6 +63,9 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       valorVenda: _formData['valorVenda'],
       imageUrl: _formData['imageUrl'],
     );
+
+    Provider.of<Vehicles>(context, listen: false).addVehicle(newVehicle);
+    Navigator.of(context).pop();
   }
 
   @override

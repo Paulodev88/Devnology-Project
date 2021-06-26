@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Vehicle with ChangeNotifier {
-  final String id;
+  final String? id;
   final String modelo;
   final String marca;
   final int anoFabricacao;
@@ -15,7 +15,7 @@ class Vehicle with ChangeNotifier {
   bool isSelected = false;
 
   Vehicle({
-    required this.id,
+    this.id,
     required this.modelo,
     required this.marca,
     required this.anoFabricacao,

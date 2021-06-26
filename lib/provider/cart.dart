@@ -44,10 +44,10 @@ class Cart with ChangeNotifier {
       _items.remove(vehicle.id);
     } else {
       _items.putIfAbsent(
-          vehicle.id,
+          vehicle.id!,
           () => CartItem(
               id: Random().nextDouble().toString(),
-              vehicleID: vehicle.id,
+              vehicleID: vehicle.id!,
               modelo: vehicle.modelo,
               valor: vehicle.valorVenda,
               ano: vehicle.anoFabricacao.toString(),
