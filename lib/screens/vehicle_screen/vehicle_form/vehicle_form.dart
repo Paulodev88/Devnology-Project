@@ -8,8 +8,23 @@ class VehicleFormScreen extends StatefulWidget {
 }
 
 class _VehicleFormScreenState extends State<VehicleFormScreen> {
-  void onImageSelected() {
-    Navigator.of(context).pop();
+  final _imageURLFocusNode = FocusNode();
+  final _imageURLController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _imageURLFocusNode.addListener(_updateImageUrl);
+  }
+
+  void _updateImageUrl() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _imageURLFocusNode.removeListener(_updateImageUrl);
+    _imageURLFocusNode.dispose();
   }
 
   @override
@@ -23,6 +38,39 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
         child: Form(
             child: ListView(
           children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'URL da Imagem'),
+                    keyboardType: TextInputType.url,
+                    textInputAction: TextInputAction.done,
+                    focusNode: _imageURLFocusNode,
+                    controller: _imageURLController,
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: _imageURLController.text.isEmpty
+                      ? Text('Informe a URL')
+                      : FittedBox(
+                          child: Image.network(
+                            _imageURLController.text,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                  margin: EdgeInsets.only(left: 10),
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  )),
+                )
+              ],
+            ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Modelo:'),
               textInputAction: TextInputAction.next,
