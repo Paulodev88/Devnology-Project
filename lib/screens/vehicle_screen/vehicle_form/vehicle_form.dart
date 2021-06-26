@@ -97,7 +97,22 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
 
     final vehicles = Provider.of<Vehicles>(context, listen: false);
     if (_formData['id'] == null) {
-      vehicles.addVehicle(vehicle).then((_) {
+      vehicles.addVehicle(vehicle).catchError((error) {
+        return showDialog<Null>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Ocorreu um erro!'),
+            content:
+                Text('Algo deu errado :(\nContate o administrador do sistema!'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Ok'),
+              )
+            ],
+          ),
+        );
+      }).then((_) {
         setState(() {
           _isLoading = false;
         });

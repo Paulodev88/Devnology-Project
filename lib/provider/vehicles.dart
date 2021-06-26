@@ -44,6 +44,8 @@ class Vehicles with ChangeNotifier {
             valorVenda: newVehicle.valorVenda),
       );
       notifyListeners();
+    }).catchError((error) {
+      throw error;
     });
   }
 
