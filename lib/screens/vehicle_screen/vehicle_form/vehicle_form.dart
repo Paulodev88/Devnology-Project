@@ -23,7 +23,19 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   }
 
   void _updateImageUrl() {
-    setState(() {});
+    if (isValidImageUrl(_imageURLController.text)) {
+      setState(() {});
+    }
+  }
+
+  bool isValidImageUrl(String url) {
+    bool isValidProtocol = url.toLowerCase().startsWith('http://') ||
+        url.toLowerCase().startsWith('https://');
+    bool isValidExtension = url.toLowerCase().endsWith('.png') ||
+        url.toLowerCase().endsWith('.jpg') ||
+        url.toLowerCase().endsWith('.jpeg');
+
+    return isValidProtocol && isValidExtension;
   }
 
   @override
@@ -34,6 +46,10 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   }
 
   void _saveForm() {
+    bool isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState!.save();
     final newVehicle = Vehicle(
       id: Random().nextDouble().toString(),
@@ -81,6 +97,14 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                         focusNode: _imageURLFocusNode,
                         controller: _imageURLController,
                         onSaved: (value) => _formData['imageUrl'] = value,
+                        validator: (value) {
+                          bool emptyUrl = value!.trim().isEmpty;
+                          bool invalidUrl = !isValidImageUrl(value);
+                          if (emptyUrl || invalidUrl) {
+                            return 'Informe uma URL válida!';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
@@ -108,11 +132,27 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   decoration: InputDecoration(labelText: 'Modelo:'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['modelo'] = value,
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um modelo válido!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Frabicante:'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['marca'] = value,
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um fabricante válido!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Ano:'),
@@ -120,21 +160,53 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   onSaved: (value) =>
                       _formData['anoFabricacao'] = int.parse(value!),
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um ano válido!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Placa'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['placa'] = value,
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe uma placa válida!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Cor'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['cor'] = value,
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe uma cor válida!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Chassi'),
                   textInputAction: TextInputAction.next,
                   onSaved: (value) => _formData['chassi'] = value,
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    bool isInvalid = value.trim().length < 3;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um chassi válido!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Valor da Compra'),
@@ -142,6 +214,15 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   onSaved: (value) =>
                       _formData['valorCompra'] = double.parse(value!),
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    var newPrice = double.tryParse(value);
+                    bool isInvalid = newPrice == null || newPrice <= 0;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um valor de compra válido!';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Valor da Venda'),
@@ -149,6 +230,15 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   onSaved: (value) =>
                       _formData['valorVenda'] = double.parse(value!),
+                  validator: (value) {
+                    bool isEmpty = value!.trim().isEmpty;
+                    var newPrice = double.tryParse(value);
+                    bool isInvalid = newPrice == null || newPrice <= 0;
+                    if (isEmpty || isInvalid) {
+                      return 'Informe um valor de venda válido!';
+                    }
+                    return null;
+                  },
                 ),
               ],
             )),
