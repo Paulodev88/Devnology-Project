@@ -15,6 +15,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   final _imageURLController = TextEditingController();
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, dynamic>();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -90,13 +91,25 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
       imageUrl: _formData['imageUrl'],
     );
 
+    setState(() {
+      _isLoading = true;
+    });
+
     final vehicles = Provider.of<Vehicles>(context, listen: false);
     if (_formData['id'] == null) {
-      vehicles.addVehicle(vehicle);
+      vehicles.addVehicle(vehicle).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      });
     } else {
       vehicles.updateVehicle(vehicle);
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     }
-    Navigator.of(context).pop();
   }
 
   @override
@@ -113,177 +126,185 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Form(
-            key: _form,
-            child: ListView(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'URL da Imagem'),
-                        keyboardType: TextInputType.url,
-                        textInputAction: TextInputAction.done,
-                        focusNode: _imageURLFocusNode,
-                        controller: _imageURLController,
-                        onSaved: (value) => _formData['imageUrl'] = value,
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Form(
+                  key: _form,
+                  child: ListView(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration:
+                                  InputDecoration(labelText: 'URL da Imagem'),
+                              keyboardType: TextInputType.url,
+                              textInputAction: TextInputAction.done,
+                              focusNode: _imageURLFocusNode,
+                              controller: _imageURLController,
+                              onSaved: (value) => _formData['imageUrl'] = value,
+                              validator: (value) {
+                                bool emptyUrl = value!.trim().isEmpty;
+                                bool invalidUrl = !isValidImageUrl(value);
+                                if (emptyUrl || invalidUrl) {
+                                  return 'Informe uma URL válida!';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            child: _imageURLController.text.isEmpty
+                                ? Text('Informe a URL')
+                                : Image.network(
+                                    _imageURLController.text,
+                                    fit: BoxFit.cover,
+                                  ),
+                            margin: EdgeInsets.only(left: 10),
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                            )),
+                          )
+                        ],
+                      ),
+                      TextFormField(
+                        initialValue: _formData['modelo'],
+                        decoration: InputDecoration(labelText: 'Modelo:'),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => _formData['modelo'] = value,
                         validator: (value) {
-                          bool emptyUrl = value!.trim().isEmpty;
-                          bool invalidUrl = !isValidImageUrl(value);
-                          if (emptyUrl || invalidUrl) {
-                            return 'Informe uma URL válida!';
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um modelo válido!';
                           }
                           return null;
                         },
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: _imageURLController.text.isEmpty
-                          ? Text('Informe a URL')
-                          : FittedBox(
-                              child: Image.network(
-                                _imageURLController.text,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                      margin: EdgeInsets.only(left: 10),
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.grey,
-                        width: 1,
-                      )),
-                    )
-                  ],
-                ),
-                TextFormField(
-                  initialValue: _formData['modelo'],
-                  decoration: InputDecoration(labelText: 'Modelo:'),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => _formData['modelo'] = value,
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um modelo válido!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['marca'],
-                  decoration: InputDecoration(labelText: 'Frabicante:'),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => _formData['marca'] = value,
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um fabricante válido!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['anoFabricacao'].toString(),
-                  decoration: InputDecoration(labelText: 'Ano:'),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onSaved: (value) =>
-                      _formData['anoFabricacao'] = int.parse(value!),
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um ano válido!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['placa'],
-                  decoration: InputDecoration(labelText: 'Placa'),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => _formData['placa'] = value,
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe uma placa válida!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['cor'],
-                  decoration: InputDecoration(labelText: 'Cor'),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => _formData['cor'] = value,
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe uma cor válida!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['chassi'],
-                  decoration: InputDecoration(labelText: 'Chassi'),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => _formData['chassi'] = value,
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 3;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um chassi válido!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['valorCompra'].toString(),
-                  decoration: InputDecoration(labelText: 'Valor da Compra'),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onSaved: (value) =>
-                      _formData['valorCompra'] = double.parse(value!),
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    var newPrice = double.tryParse(value);
-                    bool isInvalid = newPrice == null || newPrice <= 0;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um valor de compra válido!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: _formData['valorVenda'].toString(),
-                  decoration: InputDecoration(labelText: 'Valor da Venda'),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onSaved: (value) =>
-                      _formData['valorVenda'] = double.parse(value!),
-                  validator: (value) {
-                    bool isEmpty = value!.trim().isEmpty;
-                    var newPrice = double.tryParse(value);
-                    bool isInvalid = newPrice == null || newPrice <= 0;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um valor de venda válido!';
-                    }
-                    return null;
-                  },
-                ),
-              ],
-            )),
-      ),
+                      TextFormField(
+                        initialValue: _formData['marca'],
+                        decoration: InputDecoration(labelText: 'Frabicante:'),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => _formData['marca'] = value,
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um fabricante válido!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['anoFabricacao'].toString(),
+                        decoration: InputDecoration(labelText: 'Ano:'),
+                        textInputAction: TextInputAction.next,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        onSaved: (value) =>
+                            _formData['anoFabricacao'] = int.parse(value!),
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um ano válido!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['placa'],
+                        decoration: InputDecoration(labelText: 'Placa'),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => _formData['placa'] = value,
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe uma placa válida!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['cor'],
+                        decoration: InputDecoration(labelText: 'Cor'),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => _formData['cor'] = value,
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe uma cor válida!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['chassi'],
+                        decoration: InputDecoration(labelText: 'Chassi'),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => _formData['chassi'] = value,
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          bool isInvalid = value.trim().length < 3;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um chassi válido!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['valorCompra'].toString(),
+                        decoration:
+                            InputDecoration(labelText: 'Valor da Compra'),
+                        textInputAction: TextInputAction.next,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        onSaved: (value) =>
+                            _formData['valorCompra'] = double.parse(value!),
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          var newPrice = double.tryParse(value);
+                          bool isInvalid = newPrice == null || newPrice <= 0;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um valor de compra válido!';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _formData['valorVenda'].toString(),
+                        decoration:
+                            InputDecoration(labelText: 'Valor da Venda'),
+                        textInputAction: TextInputAction.next,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        onSaved: (value) =>
+                            _formData['valorVenda'] = double.parse(value!),
+                        validator: (value) {
+                          bool isEmpty = value!.trim().isEmpty;
+                          var newPrice = double.tryParse(value);
+                          bool isInvalid = newPrice == null || newPrice <= 0;
+                          if (isEmpty || isInvalid) {
+                            return 'Informe um valor de venda válido!';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  )),
+            ),
     );
   }
 }
