@@ -4,7 +4,23 @@ import 'package:devnology/widgets/sale_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SalesScreen extends StatelessWidget {
+class SalesScreen extends StatefulWidget {
+  @override
+  _SalesScreenState createState() => _SalesScreenState();
+}
+
+class _SalesScreenState extends State<SalesScreen> {
+  bool _isLoading = true;
+  @override
+  void initState() {
+    Provider.of<Sales>(context, listen: false).loadSales().then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Sales sales = Provider.of(context);
@@ -13,10 +29,14 @@ class SalesScreen extends StatelessWidget {
         title: Text('Veículos Vendidos'),
       ),
       drawer: CustomDrawer(),
-      body: ListView.builder(
-        itemCount: sales.itemsCount,
-        itemBuilder: (context, i) => SaleWidget(sales.items[i]),
-      ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: sales.itemsCount,
+              itemBuilder: (context, i) => SaleWidget(sales.items[i]),
+            ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:devnology/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,8 +40,7 @@ class Vehicle with ChangeNotifier {
   Future<void> sold() async {
     _sold();
     try {
-      final url = Uri.parse(
-          'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles');
+      final url = Uri.parse('${Constants.BASE_API_URL}/vehicles');
       final response = await http.patch(
         url,
         body: json.encode(

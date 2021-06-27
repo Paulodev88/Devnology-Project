@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:devnology/provider/vehicle.dart';
+import 'package:devnology/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Vehicles with ChangeNotifier {
-  final _baseUrl = Uri.parse(
-      'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles');
+  final _baseUrl = Uri.parse('${Constants.BASE_API_URL}/vehicles');
   List<Vehicle> _items = [];
 
   List<Vehicle> get items => [..._items];
