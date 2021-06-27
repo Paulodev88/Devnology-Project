@@ -34,6 +34,14 @@ class AppDrawer extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed(AppRoutes.VEHICLES);
           },
         ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.attach_money_sharp),
+          title: Text('Caixa'),
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.CASH);
+          },
+        ),
       ],
     );
   }

@@ -30,6 +30,7 @@ class Sales with ChangeNotifier {
             commission: saleData['commission'],
             date: DateTime.parse(saleData['date']),
             subTotal: saleData['subTotal'],
+            valorCompra: saleData['valorCompra'],
             total: saleData['total'],
             vehicles: (saleData['vehicles'] as List<dynamic>).map((item) {
               return CartItem(
@@ -39,6 +40,7 @@ class Sales with ChangeNotifier {
                 modelo: item['modelo'],
                 valor: item['valor'],
                 vehicleID: item['vehicleID'],
+                valorCompra: item['valorCompra'],
               );
             }).toList(),
           ),
@@ -56,6 +58,7 @@ class Sales with ChangeNotifier {
     final response = await http.post(
       Uri.parse("$_baseUrl.json"),
       body: json.encode({
+        'valorCompra': cart.totalPushase,
         'subTotal': cart.totalAmount,
         'commission': cart.totalCommission,
         'total': total,
@@ -68,6 +71,7 @@ class Sales with ChangeNotifier {
                   'ano': vehicleItem.ano,
                   'valor': vehicleItem.valor,
                   'imageUrl': vehicleItem.imageUrl,
+                  'valorCompra': vehicleItem.valorCompra,
                 })
             .toList(),
       }),
@@ -78,6 +82,7 @@ class Sales with ChangeNotifier {
         id: json.decode(response.body)['name'],
         subTotal: cart.totalAmount,
         commission: cart.totalCommission,
+        valorCompra: cart.totalPushase,
         total: cart.totalAmount + cart.totalCommission,
         vehicles: cart.items.values.toList(),
         date: date,

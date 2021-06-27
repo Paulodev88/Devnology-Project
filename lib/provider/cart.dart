@@ -8,6 +8,7 @@ class CartItem {
   final String modelo;
   final String ano;
   final double valor;
+  final double valorCompra;
   final String imageUrl;
 
   CartItem({
@@ -16,6 +17,7 @@ class CartItem {
     required this.modelo,
     required this.ano,
     required this.valor,
+    required this.valorCompra,
     required this.imageUrl,
   });
 }
@@ -44,6 +46,14 @@ class Cart with ChangeNotifier {
     return commission;
   }
 
+  double get totalPushase {
+    double total = 0.0;
+    _items.forEach((key, value) {
+      total += value.valorCompra;
+    });
+    return total;
+  }
+
   void addItem(Vehicle vehicle) {
     if (_items.containsKey(vehicle.id)) {
       _items.remove(vehicle.id);
@@ -55,6 +65,7 @@ class Cart with ChangeNotifier {
               vehicleID: vehicle.id!,
               modelo: vehicle.modelo,
               valor: vehicle.valorVenda,
+              valorCompra: vehicle.valorCompra,
               ano: vehicle.anoFabricacao.toString(),
               imageUrl: vehicle.imageUrl));
     }

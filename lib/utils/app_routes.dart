@@ -5,4 +5,5 @@ class AppRoutes {
   static const APP_Home = '/overview';
   static const VEHICLES = '/vehicles';
   static const VEHICLES_FORM = '/vehicle-form';
+  static const CASH = '/cash';
 }
