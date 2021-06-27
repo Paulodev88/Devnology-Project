@@ -34,34 +34,38 @@ class _SaleWidgetState extends State<SaleWidget> {
             ),
           ),
           if (_expanded)
-            Container(
-              height: (widget.sale.vehicles.length * 25.0) + 10,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              child: ListView(
-                children: widget.sale.vehicles.map((vehicle) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        vehicle.modelo,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        vehicle.ano,
-                      ),
-                      Spacer(),
-                      Text(
-                        vehicle.valor.toString(),
-                        style: TextStyle(fontSize: 18, color: Colors.grey),
-                      ),
-                    ],
-                  );
-                }).toList(),
-              ),
+            Column(
+              children: [
+                Container(
+                  height: (widget.sale.vehicles.length * 25.0) + 10,
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                  child: ListView(
+                    children: widget.sale.vehicles.map((vehicle) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            vehicle.modelo,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            vehicle.ano,
+                          ),
+                          Spacer(),
+                          Text(
+                            vehicle.valor.toString(),
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
         ],
       ),

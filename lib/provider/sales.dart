@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 class Sale {
   final String id;
   final double total;
+  final double commission;
   final List<CartItem> vehicles;
   final DateTime date;
 
   Sale({
+    required this.commission,
     required this.id,
     required this.total,
     required this.vehicles,
@@ -29,13 +31,12 @@ class Sales with ChangeNotifier {
   }
 
   void addSale(Cart cart) {
-    // final combine = (totalSum, i) => totalSum + i.valor;
-    // final total = vehicles.fold(0.0, combine);
     _items.insert(
       0,
       Sale(
         id: Random().nextDouble().toString(),
-        total: cart.totalAmount,
+        commission: cart.totalCommission,
+        total: cart.totalAmount + cart.totalCommission,
         vehicles: cart.items.values.toList(),
         date: DateTime.now(),
       ),

@@ -29,7 +29,8 @@ class CartScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Chip(
-                    label: Text('R\$ ${cart.totalAmount}'),
+                    label:
+                        Text('R\$ ${cart.totalAmount + cart.totalCommission}'),
                   ),
                   Spacer(),
                   TextButton(

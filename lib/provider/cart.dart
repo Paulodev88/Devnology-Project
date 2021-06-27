@@ -39,6 +39,11 @@ class Cart with ChangeNotifier {
     return total;
   }
 
+  double get totalCommission {
+    double commission = totalAmount * 0.10;
+    return commission;
+  }
+
   void addItem(Vehicle vehicle) {
     if (_items.containsKey(vehicle.id)) {
       _items.remove(vehicle.id);
