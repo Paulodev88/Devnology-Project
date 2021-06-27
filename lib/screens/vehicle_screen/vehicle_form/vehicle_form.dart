@@ -70,7 +70,7 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     _imageURLFocusNode.dispose();
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     bool isValid = _form.currentState!.validate();
     if (!isValid) {
       print('Aqui');
@@ -97,8 +97,11 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
 
     final vehicles = Provider.of<Vehicles>(context, listen: false);
     if (_formData['id'] == null) {
-      vehicles.addVehicle(vehicle).catchError((error) {
-        return showDialog<Null>(
+      try {
+        await vehicles.addVehicle(vehicle);
+        Navigator.of(context).pop();
+      } catch (error) {
+        await showDialog<Null>(
           context: context,
           builder: (context) => AlertDialog(
             title: Text('Ocorreu um erro!'),
@@ -107,17 +110,16 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('Ok'),
+                child: Text('Fechar'),
               )
             ],
           ),
         );
-      }).then((_) {
+      } finally {
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pop();
-      });
+      }
     } else {
       vehicles.updateVehicle(vehicle);
       setState(() {
