@@ -73,7 +73,6 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   Future<void> _saveForm() async {
     bool isValid = _form.currentState!.validate();
     if (!isValid) {
-      print('Aqui');
       return;
     }
     _form.currentState!.save();
@@ -96,36 +95,33 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     });
 
     final vehicles = Provider.of<Vehicles>(context, listen: false);
-    if (_formData['id'] == null) {
-      try {
+
+    try {
+      if (_formData['id'] == null) {
         await vehicles.addVehicle(vehicle);
-        Navigator.of(context).pop();
-      } catch (error) {
-        await showDialog<Null>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Ocorreu um erro!'),
-            content:
-                Text('Algo deu errado :(\nContate o administrador do sistema!'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text('Fechar'),
-              )
-            ],
-          ),
-        );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+      } else {
+        await vehicles.updateVehicle(vehicle);
       }
-    } else {
-      vehicles.updateVehicle(vehicle);
+      Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog<Null>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Ocorreu um erro!'),
+          content:
+              Text('Algo deu errado :(\nContate o administrador do sistema!'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Fechar'),
+            )
+          ],
+        ),
+      );
+    } finally {
       setState(() {
         _isLoading = false;
       });
-      Navigator.of(context).pop();
     }
   }
 

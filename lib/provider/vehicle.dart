@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Vehicle with ChangeNotifier {
   final String? id;
@@ -12,7 +15,7 @@ class Vehicle with ChangeNotifier {
   final double valorCompra;
   final double valorVenda;
   final String imageUrl;
-  bool isSelected = false;
+  bool isSold = false;
 
   Vehicle({
     this.id,
@@ -28,8 +31,29 @@ class Vehicle with ChangeNotifier {
     required this.imageUrl,
   });
 
-  void selected() {
-    isSelected = !isSelected;
+  void _sold() {
+    isSold = !isSold;
     notifyListeners();
+  }
+
+  Future<void> sold() async {
+    _sold();
+    try {
+      final url = Uri.parse(
+          'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles');
+      final response = await http.patch(
+        url,
+        body: json.encode(
+          {
+            'isSold': isSold,
+          },
+        ),
+      );
+      if (response.statusCode >= 400) {
+        _sold();
+      }
+    } catch (error) {
+      _sold();
+    }
   }
 }

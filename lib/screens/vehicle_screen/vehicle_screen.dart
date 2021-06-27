@@ -5,9 +5,21 @@ import 'package:devnology/widgets/vehicle_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class VehiclesScreen extends StatelessWidget {
+class VehiclesScreen extends StatefulWidget {
+  @override
+  _VehiclesScreenState createState() => _VehiclesScreenState();
+}
+
+class _VehiclesScreenState extends State<VehiclesScreen> {
+  Future<void> _refreshVehicle(BuildContext context) {
+    return Provider.of<Vehicles>(context, listen: false).loadVehicles();
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _refreshVehicle(context);
+    });
     final vehiclesData = Provider.of<Vehicles>(context);
     final vehicle = vehiclesData.items;
     return Scaffold(
@@ -23,15 +35,18 @@ class VehiclesScreen extends StatelessWidget {
         ],
       ),
       drawer: CustomDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-          itemCount: vehiclesData.vehiclesCount,
-          itemBuilder: (ctx, i) => Column(
-            children: [
-              VehicleItem(vehicle[i]),
-              Divider(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: () => _refreshVehicle(context),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: ListView.builder(
+            itemCount: vehiclesData.vehiclesCount,
+            itemBuilder: (ctx, i) => Column(
+              children: [
+                VehicleItem(vehicle[i]),
+                Divider(),
+              ],
+            ),
           ),
         ),
       ),

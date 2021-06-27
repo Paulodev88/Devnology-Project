@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Vehicles with ChangeNotifier {
-  final _url = Uri.parse(
-      'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles.json');
+  final _baseUrl = Uri.parse(
+      'https://devnology-flutter-default-rtdb.firebaseio.com/vehicles');
   List<Vehicle> _items = [];
 
   List<Vehicle> get items => [..._items];
 
   Future<void> loadVehicles() async {
-    final response = await http.get(_url);
+    final response = await http.get(Uri.parse("$_baseUrl.json"));
     Map<String, dynamic>? data = json.decode(response.body);
     _items.clear();
 
@@ -41,7 +41,7 @@ class Vehicles with ChangeNotifier {
   Future<void> addVehicle(Vehicle newVehicle) async {
     return http
         .post(
-      _url,
+      Uri.parse("$_baseUrl.json"),
       body: json.encode({
         'anoFabricacao': newVehicle.anoFabricacao,
         'chassi': newVehicle.chassi,
@@ -80,7 +80,7 @@ class Vehicles with ChangeNotifier {
     return _items.length;
   }
 
-  void updateVehicle(Vehicle vehicle) {
+  Future<void> updateVehicle(Vehicle vehicle) async {
     if (vehicle.id == null) {
       return;
     }
@@ -88,16 +88,40 @@ class Vehicles with ChangeNotifier {
     final index = _items.indexWhere((element) => element.id == element.id);
 
     if (index >= 0) {
+      await http.patch(
+        Uri.parse("$_baseUrl/${vehicle.id}.json"),
+        body: json.encode(
+          {
+            'anoFabricacao': vehicle.anoFabricacao,
+            'chassi': vehicle.chassi,
+            'cor': vehicle.cor,
+            'dataCompra': vehicle.dataCompra,
+            'imageUrl': vehicle.imageUrl,
+            'marca': vehicle.marca,
+            'modelo': vehicle.modelo,
+            'placa': vehicle.placa,
+            'valorCompra': vehicle.valorCompra,
+            'valorVenda': vehicle.valorVenda
+          },
+        ),
+      );
       _items[index] = vehicle;
       notifyListeners();
     }
   }
 
-  void deleteVehicle(String id) {
+  Future<void> deleteVehicle(String id) async {
     final index = _items.indexWhere((element) => element.id == element.id);
     if (index >= 0) {
-      _items.removeWhere((element) => element.id == id);
-      notifyListeners();
+      final vehicle = _items[index];
+      final response =
+          await http.delete(Uri.parse("$_baseUrl/${vehicle.id}.json"));
+      if (response.statusCode >= 400) {
+        print('Problema');
+      } else {
+        _items.remove(vehicle);
+        notifyListeners();
+      }
     }
   }
 }
