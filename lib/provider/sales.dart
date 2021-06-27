@@ -1,25 +1,12 @@
-import 'dart:math';
-
+import 'dart:convert';
 import 'package:devnology/provider/cart.dart';
+import 'package:devnology/provider/sale.dart';
 import 'package:flutter/material.dart';
-
-class Sale {
-  final String id;
-  final double total;
-  final double commission;
-  final List<CartItem> vehicles;
-  final DateTime date;
-
-  Sale({
-    required this.commission,
-    required this.id,
-    required this.total,
-    required this.vehicles,
-    required this.date,
-  });
-}
+import 'package:http/http.dart' as http;
 
 class Sales with ChangeNotifier {
+  final _baseUrl =
+      Uri.parse('https://devnology-flutter-default-rtdb.firebaseio.com/solds');
   List<Sale> _items = [];
 
   List<Sale> get items {
@@ -30,18 +17,39 @@ class Sales with ChangeNotifier {
     return _items.length;
   }
 
-  void addSale(Cart cart) {
+  Future<void> addSale(Cart cart) async {
+    final date = DateTime.now();
+    final total = cart.totalAmount + cart.totalCommission;
+    final response = await http.post(
+      Uri.parse("$_baseUrl.json"),
+      body: json.encode({
+        'subTotal': cart.totalAmount,
+        'commission': cart.totalCommission,
+        'total': total,
+        'date': date.toIso8601String(),
+        'vehicles': cart.items.values
+            .map((vehicleItem) => {
+                  'id': vehicleItem.id,
+                  'vehicleID': vehicleItem.vehicleID,
+                  'modelo': vehicleItem.modelo,
+                  'ano': vehicleItem.ano,
+                  'valor': vehicleItem.valor,
+                  'imageUrl': vehicleItem.imageUrl,
+                })
+            .toList(),
+      }),
+    );
     _items.insert(
       0,
       Sale(
-        id: Random().nextDouble().toString(),
+        id: json.decode(response.body)['name'],
+        subTotal: cart.totalAmount,
         commission: cart.totalCommission,
         total: cart.totalAmount + cart.totalCommission,
         vehicles: cart.items.values.toList(),
-        date: DateTime.now(),
+        date: date,
       ),
     );
-
     notifyListeners();
   }
 }

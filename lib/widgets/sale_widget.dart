@@ -1,4 +1,4 @@
-import 'package:devnology/provider/sales.dart';
+import 'package:devnology/provider/sale.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -65,6 +65,61 @@ class _SaleWidgetState extends State<SaleWidget> {
                     }).toList(),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'SubTotal:',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Spacer(),
+                          Text(
+                            '${widget.sale.subTotal.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Comissão:',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Spacer(),
+                          Text(
+                            '${widget.sale.commission.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total:',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Spacer(),
+                          Text(
+                            '${widget.sale.total.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
         ],

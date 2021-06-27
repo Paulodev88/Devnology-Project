@@ -1,6 +1,6 @@
 import 'package:devnology/provider/cart.dart';
-import 'package:devnology/provider/sales.dart';
 import 'package:devnology/widgets/cart_item_widget.dart';
+import 'package:devnology/widgets/puchase_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,18 +33,7 @@ class CartScreen extends StatelessWidget {
                         Text('R\$ ${cart.totalAmount + cart.totalCommission}'),
                   ),
                   Spacer(),
-                  TextButton(
-                    child: Text('COMPRAR'),
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onSurface: Colors.grey,
-                    ),
-                    onPressed: () {
-                      Provider.of<Sales>(context, listen: false).addSale(cart);
-                      cart.clear();
-                    },
-                  )
+                  PurchaseButton(cart: cart)
                 ],
               ),
             ),
