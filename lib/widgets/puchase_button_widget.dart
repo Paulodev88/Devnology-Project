@@ -1,5 +1,6 @@
 import 'package:devnology/provider/cart.dart';
 import 'package:devnology/provider/sales.dart';
+import 'package:devnology/provider/vehicles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,6 +41,12 @@ class _PurchaseButtonState extends State<PurchaseButton> {
               setState(() {
                 _isLoading = true;
               });
+
+              widget.cart.items.forEach((key, value) async {
+                await Provider.of<Vehicles>(context, listen: false)
+                    .deleteVehicle(value.vehicleID);
+              });
+
               await Provider.of<Sales>(context, listen: false)
                   .addSale(widget.cart);
               setState(() {
