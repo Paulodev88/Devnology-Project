@@ -11,33 +11,110 @@ class VehicleDetailScreen extends StatelessWidget {
         title: Text(vehicle.modelo),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(
-                vehicle.imageUrl,
-                fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  vehicle.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'R\$ ${vehicle.valorVenda}',
-              style: TextStyle(color: Colors.grey, fontSize: 30),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            //Caso o Chassi seja muito grande foi tomado essa medida de segurança com padding para nao quebrar a tela
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text('Chassi: ${vehicle.chassi}'),
-            )
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  'R\$ ${vehicle.valorVenda.toStringAsFixed(2)}',
+                  style: TextStyle(color: Colors.grey, fontSize: 30),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Modelo:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    '${vehicle.modelo}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Ano:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    '${vehicle.anoFabricacao}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Cor:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    '${vehicle.cor}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Fabricante:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    '${vehicle.marca}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Valor:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    'R\$ ${vehicle.valorVenda.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
