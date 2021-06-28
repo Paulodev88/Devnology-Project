@@ -10,6 +10,7 @@ class CartItem {
   final double valor;
   final double valorCompra;
   final String imageUrl;
+  final String dataCompra;
 
   CartItem({
     required this.id,
@@ -18,6 +19,7 @@ class CartItem {
     required this.ano,
     required this.valor,
     required this.valorCompra,
+    required this.dataCompra,
     required this.imageUrl,
   });
 }
@@ -61,13 +63,15 @@ class Cart with ChangeNotifier {
       _items.putIfAbsent(
           vehicle.id!,
           () => CartItem(
-              id: Random().nextDouble().toString(),
-              vehicleID: vehicle.id!,
-              modelo: vehicle.modelo,
-              valor: vehicle.valorVenda,
-              valorCompra: vehicle.valorCompra,
-              ano: vehicle.anoFabricacao.toString(),
-              imageUrl: vehicle.imageUrl));
+                id: Random().nextDouble().toString(),
+                vehicleID: vehicle.id!,
+                modelo: vehicle.modelo,
+                valor: vehicle.valorVenda,
+                valorCompra: vehicle.valorCompra,
+                ano: vehicle.anoFabricacao.toString(),
+                imageUrl: vehicle.imageUrl,
+                dataCompra: vehicle.dataCompra,
+              ));
     }
     notifyListeners();
   }

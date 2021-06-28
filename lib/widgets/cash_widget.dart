@@ -209,7 +209,7 @@ class _CashWidgetState extends State<CashWidget> {
                               'R\$ ${totalLiquidoMes().toStringAsFixed(2)}',
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: totalLiquido() >= 0
+                                  color: totalLiquidoMes() >= 0
                                       ? Colors.blue[900]
                                       : Colors.red),
                             ),
@@ -347,19 +347,25 @@ class _CashWidgetState extends State<CashWidget> {
 
   double totalComprasMes() {
     double total = 0.0;
+    var test;
 
     widget.sale.items.forEach((element) {
-      DateTime date = element.date;
-      if (date.month == mesAtual()) {
-        total += element.valorCompra;
-      }
+      element.vehicles.forEach((element) {
+        DateTime date = DateTime.parse(element.dataCompra);
+        if (date.month == mesAtual()) {
+          total += element.valorCompra;
+        }
+      });
     });
+
     widget.vehicles.items.forEach((element) {
       DateTime date = DateTime.parse(element.dataCompra);
       if (date.month == mesAtual()) {
         total += element.valorCompra;
       }
     });
+
+    print(test);
 
     return total;
   }

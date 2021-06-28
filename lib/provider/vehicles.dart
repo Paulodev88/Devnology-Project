@@ -111,7 +111,7 @@ class Vehicles with ChangeNotifier {
   }
 
   Future<void> deleteVehicle(String id) async {
-    final index = _items.indexWhere((element) => element.id == element.id);
+    final index = _items.indexWhere((element) => element.id == id);
     if (index >= 0) {
       final vehicle = _items[index];
       final response =

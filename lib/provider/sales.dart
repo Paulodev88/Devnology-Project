@@ -41,6 +41,7 @@ class Sales with ChangeNotifier {
                 valor: item['valor'],
                 vehicleID: item['vehicleID'],
                 valorCompra: item['valorCompra'],
+                dataCompra: item['dataCompra'],
               );
             }).toList(),
           ),
@@ -72,6 +73,7 @@ class Sales with ChangeNotifier {
                   'valor': vehicleItem.valor,
                   'imageUrl': vehicleItem.imageUrl,
                   'valorCompra': vehicleItem.valorCompra,
+                  'dataCompra': vehicleItem.dataCompra,
                 })
             .toList(),
       }),
