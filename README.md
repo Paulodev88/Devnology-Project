@@ -61,7 +61,7 @@ Ao finalizar a prova basta enviar o link do repositório no linkedin.
 <h2 align="center">Layout 🎨</h2>
 
    <p align="center">
-      <img alt="PayFlow" title="PayFlow" src=".github/capa.png" />
+      <img alt="Devnology" title="Devnology" src=".github/capa.png" />
    </p>
 
    <p align="center">
