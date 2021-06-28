@@ -1,8 +1,8 @@
 
-# Projeto Proposto pela Devnology
+## Projeto Proposto pela Devnology
 
 
-# devnology
+## devnology
 
 Você precisará construir um sistema para uma agência de veículos, ele será composto por uma api e um frontend (Desktop ou Mobile).
 
@@ -26,15 +26,49 @@ Qualquer dúvida entre em contato comigo pelo linkedin, estarei à disposição 
 
 Ao finalizar a prova basta enviar o link do repositório no linkedin.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<h2 align="center">Sobre 📖</h2>
+   
+<p>
+   O projeto Devnology Car foi desenvolvido como teste proposto pela Devnology. <br>
+   O Devnology Car se trata de um app mobile feito em Flutter para Gerenciamento de compra e venda de veículos, contendo recursos como o Firebase RealTime com uso de API, entre vários outros pontos, como o uso do Provider.<br>
+  
+</p>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+<h2 align="center">Como Usar 🤔</h2>
+
+   ```
+   - Clone esse repositório:
+   $ git clone https://github.com/Paulodev88/Devnology-Project.git
+
+   - Entre no diretório:
+   $ cd Devnology-Project
+
+   - Instale as dependências:
+   $ flutter pub get
+
+   - Inicie o app: 
+   $ flutter run
+   ```
+
+---
+
+
+<h2 align="center">Layout 🎨</h2>
+
+   <p align="center">
+      <img alt="PayFlow" title="PayFlow" src=".github/capa.png" />
+   </p>
+
+   <p align="center">
+      Você pode acessar o layout no Figma:
+   
+   - <a href="https://www.figma.com/file/D6xTwJPGrcgqwrbWuV7zwj/Devnology-Project?node-id=0%3A1">Mobile</a> 📱
+   </p>
+
+---
+
