@@ -1,4 +1,5 @@
 import 'package:devnology/provider/sales.dart';
+import 'package:devnology/provider/vehicles.dart';
 import 'package:devnology/widgets/cash_widget.dart';
 import 'package:devnology/widgets/drawer_widget/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +16,21 @@ class _CashScreenState extends State<CashScreen> {
   bool _isLoading = true;
 
   void initState() {
-    Provider.of<Sales>(context, listen: false).loadSales().then((value) {
-      setState(() {
-        _isLoading = false;
+    Provider.of<Vehicles>(context, listen: false).loadVehicles().then((value) {
+      Provider.of<Sales>(context, listen: false).loadSales().then((value) {
+        setState(() {
+          _isLoading = false;
+        });
       });
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final Sales sales = Provider.of<Sales>(context);
+    final Vehicles vehicles = Provider.of<Vehicles>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Caixa'),
@@ -37,6 +42,7 @@ class _CashScreenState extends State<CashScreen> {
             )
           : CashWidget(
               sale: sales,
+              vehicles: vehicles,
             ),
     );
   }

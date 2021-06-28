@@ -1,11 +1,14 @@
 import 'package:devnology/provider/sales.dart';
+import 'package:devnology/provider/vehicles.dart';
 import 'package:flutter/material.dart';
 
 class CashWidget extends StatefulWidget {
   final Sales sale;
+  final Vehicles vehicles;
   const CashWidget({
     Key? key,
     required this.sale,
+    required this.vehicles,
   }) : super(key: key);
 
   @override
@@ -304,6 +307,9 @@ class _CashWidgetState extends State<CashWidget> {
     widget.sale.items.forEach((element) {
       total += element.valorCompra;
     });
+    widget.vehicles.items.forEach((element) {
+      total += element.valorCompra;
+    });
     return total;
   }
 
@@ -344,6 +350,12 @@ class _CashWidgetState extends State<CashWidget> {
 
     widget.sale.items.forEach((element) {
       DateTime date = element.date;
+      if (date.month == mesAtual()) {
+        total += element.valorCompra;
+      }
+    });
+    widget.vehicles.items.forEach((element) {
+      DateTime date = DateTime.parse(element.dataCompra);
       if (date.month == mesAtual()) {
         total += element.valorCompra;
       }
